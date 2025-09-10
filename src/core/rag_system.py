@@ -1,16 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import  Any
 from llama_index.core import VectorStoreIndex, Document
+from ..processors import BaseFileProcessor
 
-class BaseFileProcessor(ABC):
-    """文件处理基类接口"""
-    @abstractmethod
-    def process(self, file_path: str) -> list[Document]:
-        """处理文件并返回Document列表"""
-        pass
 
 class RAGSystem:
-
     def __init__(self):
         self.file_processors: dict[str, BaseFileProcessor] = {}
         self.knowledge_bases: dict[str, VectorStoreIndex] = {}
