@@ -1,24 +1,39 @@
 from abc import ABC, abstractmethod
 from typing import  Any
 from llama_index.core import VectorStoreIndex, Document
-from ..processors import BaseFileProcessor
-
+from processors import BaseFileProcessor
+from processors import (
+            TextProcessor,
+            MarkdownProcessor,
+            CsvProcessor,
+            ExcelProcessor,
+            DocProcessor,
+            ProcessorMeta
+        )
 
 class RAGSystem:
     def __init__(self):
-        self.file_processors: dict[str, BaseFileProcessor] = {}
         self.knowledge_bases: dict[str, VectorStoreIndex] = {}
         self.thread_sessions: dict[str, Any] = {}
-    
-    def register_file_processor(self, file_type: str, processor: BaseFileProcessor):
-        self.file_processors[file_type] = processor
-    
+        self.processorMap:dict[Any,BaseFileProcessor] = {}
+        self.supportProcessorMap:dict[str,Any] = {}
+    def install_processor(self):
+        """所有支持的processor全部在此示例化，统一注册"""
+        processors = [cls() for cls in BaseFileProcessor.__subclasses__()]
+        
+        self.processorMap.update({type(p):p for p in processors})
+        self.supportProcessorMap.update(BaseFileProcessor.get_all_processor())
+        
+        print(f"已注册的processor：{self.processorMap}")
+        print(f"支持的processor：{self.supportProcessorMap}")
+
     def upload_knowledge(self, file_path: str, kb_id: str, chunk_strategy: str = "token") -> bool:
         file_ext = file_path.split('.')[-1].lower()
-        if file_ext not in self.file_processors:
+        if file_ext not in self.supportProcessorMap:
             return False
-            
-        documents = self.file_processors[file_ext].process(file_path, chunk_strategy)
+        process_type = self.supportProcessorMap[file_ext]
+        process = self.processorMap[process_type]
+        documents = process.process(file_path, chunk_strategy=chunk_strategy)
         self.knowledge_bases[kb_id] = VectorStoreIndex.from_documents(documents)
         return True
     

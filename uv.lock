@@ -1342,6 +1342,7 @@ dependencies = [
     { name = "llama-index" },
     { name = "llama-index-embeddings-dashscope" },
     { name = "llama-index-llms-openai-like" },
+    { name = "llama-index-readers-file" },
     { name = "python-docx" },
 ]
 
@@ -1351,6 +1352,7 @@ requires-dist = [
     { name = "llama-index", specifier = ">=0.14.0" },
     { name = "llama-index-embeddings-dashscope", specifier = ">=0.4.1" },
     { name = "llama-index-llms-openai-like", specifier = ">=0.5.1" },
+    { name = "llama-index-readers-file", specifier = ">=0.5.4" },
     { name = "python-docx", specifier = ">=1.2.0" },
 ]
 

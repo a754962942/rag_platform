@@ -9,5 +9,6 @@ dependencies = [
     "llama-index>=0.14.0",
     "llama-index-embeddings-dashscope>=0.4.1",
     "llama-index-llms-openai-like>=0.5.1",
+    "llama-index-readers-file>=0.5.4",
     "python-docx>=1.2.0",
 ]
