@@ -6,7 +6,6 @@ from pathlib import Path
 class DocProcessor(BaseFileProcessor):
     FILE_TYPES = ["docx","doc"]
     def __init__(self):
-
         self.parser = DocxReader()
     """Word文档处理器"""
     def process(self, file_path: str, chunk_strategy: str = "docx",metadata:dict=None) -> list[Document]:
@@ -20,3 +19,4 @@ class DocProcessor(BaseFileProcessor):
         })
         docs = self.parser.load_data(file=Path(file_path))
         return docs
+

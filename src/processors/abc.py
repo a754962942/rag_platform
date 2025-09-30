@@ -9,9 +9,8 @@ class ProcessorMeta(ABCMeta):
         if name !="BaseFileProcessor":
             file_types = getattr(cls,"FILE_TYPES",[getattr(cls,"FILE_TYPE",None)])
             file_type = getattr(cls,"FILE_TYPE",None)
-            if  not file_types and file_type:
+            if not file_types and file_type:
                 file_types = [file_type]
-            print(f"{cls}:{file_types}")
             if isinstance(file_types,list):
                 for ft in file_types:
                     if ft:
